@@ -22,12 +22,6 @@ jackson_family.add_member(
      "lucky_numbers": [10, 14, 3] }) 
 
 jackson_family.add_member(
-    { "first_name" : "marcela",
-     "age":65,
-     "lucky_numbers": [24, 31, 6] }) 
-
-
-jackson_family.add_member(
     { "first_name" : "Jimmy",
      "age":5,
      "lucky_numbers": [1] }) 
@@ -56,12 +50,22 @@ def get_single_member(member_id):
     return jsonify({"msg": "Miembro no encontrado"}), 404
 
 
+@app.route('/members/', methods=['POST'])
+def add_new_menber():
+   new_menber = request.json
+   if not new_menber:
+      return jsonify({"msg" : "error al añadir un miembro"}), 400
+   jackson_family.add_member(new_menber)
+   return jsonify({"msg":"Miembro añadido"}), 200
+
+
+
 @app.route('/members/<int:member_id>', methods=['DELETE'])
 def delete_sigle_members(member_id):
-   deleted = jackson_family.delete_member
-   if deleted :
-      return jsonify({"done: TRUE"}), 200
-   return jsonify({"msg:" "no se puede borrar"}), 404
+ deleted = jackson_family.delete_member(member_id)
+ if deleted :
+      return jsonify({"done": True}), 200
+ return jsonify({"msg:" "no se puede borrar"}), 404
 
 
 if __name__ == '__main__':
