@@ -36,7 +36,7 @@ def handle_invalid_usage(error):
     return jsonify(error.to_dict()), error.status_code
 
 
-@app.route('/members/', methods=['GET'])
+@app.route('/', methods=['GET'])
 def get_all_members():
     members = jackson_family.get_all_members()
     return jsonify(members), 200
